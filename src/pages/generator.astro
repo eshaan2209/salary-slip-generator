@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import SalarySlipApp from '../components/SalarySlipApp.jsx';
+---
+
+<Base
+  title="Free Salary Slip Generator India - Create Payslip Online"
+  description="Generate professional salary slips online for free. Calculates PF, ESI, HRA, Professional Tax automatically. Download as PDF instantly."
+  schema={{
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Salary Slip Generator India",
+    "url": "https://payslipgen.in/generator",
+    "description": "Generate professional Indian salary slips online. Auto-calculates PF, ESI, HRA, Professional Tax.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }}
+>
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <div class="text-center mb-10">
+      <h1 class="text-3xl font-bold text-gray-900">Free Salary Slip Generator</h1>
+      <p class="text-gray-500 mt-2 text-lg">Indian payroll format &middot; Auto-calculates PF, ESI, HRA &middot; Instant PDF download</p>
+    </div>
+    <SalarySlipApp client:load />
+  </div>
+</Base>

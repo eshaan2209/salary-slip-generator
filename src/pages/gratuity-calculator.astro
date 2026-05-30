@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import GratuityCalculator from '../components/GratuityCalculator.jsx';
+---
+
+<Base
+  title="Gratuity Calculator India - Calculate Gratuity Online Free | PaySlipGen"
+  description="Free gratuity calculator for Indian employees. Calculate your gratuity amount based on last drawn basic salary and years of service as per Payment of Gratuity Act, 1972."
+  schema={{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Gratuity Calculator India - Calculate Gratuity Online",
+    "description": "Free gratuity calculator. Calculate your gratuity amount as per the Payment of Gratuity Act, 1972.",
+    "author": { "@type": "Organization", "name": "PaySlipGen.in" },
+    "publisher": { "@type": "Organization", "name": "PaySlipGen.in" },
+    "datePublished": "2026-05-30",
+    "dateModified": "2026-05-30",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://payslipgen.in/gratuity-calculator" }
+  }}
+>
+  <article class="max-w-2xl mx-auto px-4 py-12">
+    <nav class="text-sm text-gray-400 mb-6" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-indigo-600">Home</a>
+      <span class="mx-2">/</span>
+      <span class="text-gray-600">Gratuity Calculator</span>
+    </nav>
+
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Gratuity Calculator</h1>
+    <p class="text-gray-500 text-lg mb-8">Calculate your gratuity amount as per the Payment of Gratuity Act, 1972</p>
+
+    <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm mb-8">
+      <GratuityCalculator client:load />
+    </div>
+
+    <div class="prose prose-gray max-w-none space-y-6">
+      <section>
+        <h2 class="text-xl font-semibold text-gray-900 mb-3">What is Gratuity?</h2>
+        <p class="text-gray-600 leading-relaxed">
+          Gratuity is a lump-sum payment made by an employer to an employee as a token of appreciation for their services rendered to the company. It is governed by the Payment of Gratuity Act, 1972 and is mandatory for organizations with 10 or more employees.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-gray-900 mb-3">Gratuity Formula</h2>
+        <div className="bg-gray-50 rounded-xl p-4 text-center">
+          <p class="text-lg font-mono text-indigo-700">Gratuity = (Last Drawn Basic x 15 x Years of Service) / 26</p>
+        </div>
+        <p class="text-gray-600 leading-relaxed mt-3">
+          Where 15 represents 15 days' wages, and 26 represents the number of working days in a month. Years of service is rounded down to the nearest whole year (e.g., 5 years 8 months = 5 years).
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-gray-900 mb-3">Eligibility</h2>
+        <ul class="list-disc list-inside text-gray-600 space-y-2">
+          <li>Employee must have completed <strong>5 or more years</strong> of continuous service</li>
+          <li>Gratuity is payable on resignation, retirement, or death</li>
+          <li>Maximum gratuity payable: <strong>₹20,00,000</strong> (tax-exempt limit under Sec 10(10))</li>
+          <li>Gratuity above ₹20 lakh is taxable</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-gray-900 mb-3">Tax on Gratuity</h2>
+        <p class="text-gray-600 leading-relaxed">
+          Under Section 10(10) of the Income Tax Act, gratuity received by government employees is fully exempt. For private sector employees, the least of the following is exempt: actual gratuity received, ₹20,00,000, or 15 days' salary for each completed year of service.
+        </p>
+      </section>
+    </div>
+
+    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mt-8">
+      <h3 class="font-semibold text-indigo-800 mb-2">Generate Full Salary Slip</h3>
+      <p class="text-indigo-700 text-sm mb-3">See your complete salary breakdown including PF and other components.</p>
+      <a href="/generator" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors text-sm">
+        Open Generator &rarr;
+      </a>
+    </div>
+  </article>
+</Base>

@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import HRACalculator from '../components/HRACalculator.jsx';
+---
+
+<Base
+  title="HRA Exemption Calculator India - Calculate Tax-Free HRA Online | PaySlipGen"
+  description="Free HRA exemption calculator for Indian salaried employees. Calculate how much House Rent Allowance is exempt from tax under Section 10(13A). Metro vs non-metro rates."
+  schema={{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "HRA Exemption Calculator India - Calculate Tax-Free HRA",
+    "description": "Free HRA exemption calculator. Find out how much of your House Rent Allowance is tax-exempt under Section 10(13A).",
+    "author": { "@type": "Organization", "name": "PaySlipGen.in" },
+    "publisher": { "@type": "Organization", "name": "PaySlipGen.in" },
+    "datePublished": "2026-05-30",
+    "dateModified": "2026-05-30",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://payslipgen.in/hra-exemption-calculator" }
+  }}
+>
+  <article class="max-w-2xl mx-auto px-4 py-12">
+    <nav class="text-sm text-gray-400 mb-6" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-indigo-600">Home</a>
+      <span class="mx-2">/</span>
+      <span class="text-gray-600">HRA Exemption Calculator</span>
+    </nav>
+
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">HRA Exemption Calculator</h1>
+    <p class="text-gray-500 text-lg mb-8">Calculate how much of your HRA is tax-free under Section 10(13A)</p>
+
+    <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm mb-8">
+      <HRACalculator client:load />
+    </div>
+
+    <div class="prose prose-gray max-w-none space-y-6">
+      <section>
+        <h2 class="text-xl font-semibold text-gray-900 mb-3">What is HRA Exemption?</h2>
+        <p class="text-gray-600 leading-relaxed">
+          House Rent Allowance (HRA) is partially or fully exempt from income tax under Section 10(13A) of the Income Tax Act, 1961. To claim HRA exemption, you must actually pay rent and live in rented accommodation. You cannot claim HRA exemption if you live in your own house.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-gray-900 mb-3">How is HRA Exemption Calculated?</h2>
+        <p class="text-gray-600 leading-relaxed mb-3">The exempt HRA is the <strong>minimum</strong> of these three amounts:</p>
+        <div class="bg-gray-50 rounded-xl p-4 space-y-2 text-sm text-gray-600">
+          <p><strong>(a)</strong> Actual HRA received from employer</p>
+          <p><strong>(b)</strong> 50% of Basic salary (metro cities: Delhi, Mumbai, Kolkata, Chennai) OR 40% of Basic (non-metro)</p>
+          <p><strong>(c)</strong> Rent paid minus 10% of Basic salary</p>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-gray-900 mb-3">Conditions for Claiming HRA</h2>
+        <ul class="list-disc list-inside text-gray-600 space-y-2">
+          <li>You must be salaried (not self-employed)</li>
+          <li>You must actually pay rent for accommodation</li>
+          <li>You should not own the house where you live</li>
+          <li>You must submit rent receipts to your employer</li>
+          <li>If annual rent exceeds ₹1 lakh, you must provide landlord's PAN</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mt-8">
+      <h3 class="font-semibold text-indigo-800 mb-2">Generate Full Salary Slip</h3>
+      <p class="text-indigo-700 text-sm mb-3">See HRA along with all other salary components in a professional salary slip.</p>
+      <a href="/generator" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors text-sm">
+        Open Generator &rarr;
+      </a>
+    </div>
+  </article>
+</Base>
