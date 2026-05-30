@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /_astro/
 
-Sitemap: https://payslipgen.in/sitemap.xml
+Sitemap: https://salary-slip-generator-ten.vercel.app/sitemap.xml
