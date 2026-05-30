@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import TaxRegimeComparator from '../components/TaxRegimeComparator.jsx';
+---
+
+<Base
+  title="Old vs New Tax Regime Calculator India - Which Saves More Tax? | PaySlipGen"
+  description="Free old vs new tax regime comparison calculator for Indian salaried employees. Find out which tax regime saves you more money with Section 80C, 80D, HRA deductions."
+  schema={{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Old vs New Tax Regime Calculator India",
+    "description": "Compare old and new tax regimes. Find out which saves more tax for Indian salaried employees.",
+    "author": { "@type": "Organization", "name": "PaySlipGen.in" },
+    "publisher": { "@type": "Organization", "name": "PaySlipGen.in" },
+    "datePublished": "2026-05-30",
+    "dateModified": "2026-05-30",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://payslipgen.in/tax-regime-comparator" }
+  }}
+>
+  <article class="max-w-2xl mx-auto px-4 py-12">
+    <nav class="text-sm text-gray-400 mb-6" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-indigo-600">Home</a>
+      <span class="mx-2">/</span>
+      <span class="text-gray-600">Tax Regime Comparator</span>
+    </nav>
+
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Old vs New Tax Regime</h1>
+    <p class="text-gray-500 text-lg mb-8">Find out which tax regime saves you more money</p>
+
+    <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-sm mb-8">
+      <TaxRegimeComparator client:load />
+    </div>
+
+    <div class="prose prose-gray dark:prose-invert max-w-none space-y-6">
+      <section>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">Key Differences</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead><tr class="border-b border-gray-200 dark:border-gray-700">
+              <th class="text-left py-2 text-gray-500">Feature</th>
+              <th class="text-left py-2 text-gray-500">Old Regime</th>
+              <th class="text-left py-2 text-gray-500">New Regime</th>
+            </tr></thead>
+            <tbody class="text-gray-600 dark:text-gray-300">
+              <tr class="border-b border-gray-100 dark:border-gray-800"><td className="py-2">Standard Deduction</td><td>₹50,000</td><td>₹75,000</td></tr>
+              <tr class="border-b border-gray-100 dark:border-gray-800"><td className="py-2">Section 80C</td><td>Up to ₹1.5L</td><td>Not available</td></tr>
+              <tr class="border-b border-gray-100 dark:border-gray-800"><td className="py-2">Section 80D</td><td>Available</td><td>Not available</td></tr>
+              <tr class="border-b border-gray-100 dark:border-gray-800"><td className="py-2">HRA Exemption</td><td>Available</td><td>Not available</td></tr>
+              <tr><td className="py-2">Tax slabs</td><td>Higher rates, fewer slabs</td><td>Lower rates, more slabs</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </article>
+</Base>

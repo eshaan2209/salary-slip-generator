@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { calculateSalary } from './SalaryCalculator.js';
 
 const MONTHS = ['January','February','March','April','May','June',
@@ -6,37 +6,54 @@ const MONTHS = ['January','February','March','April','May','June',
 
 const currentDate = new Date();
 
+const defaultForm = {
+  companyName: '',
+  companyAddress: '',
+  companyLogo: null,
+  employeeName: '',
+  employeeId: '',
+  designation: '',
+  department: '',
+  dateOfJoining: '',
+  panNumber: '',
+  pfAccountNo: '',
+  esiNumber: '',
+  bankName: '',
+  accountNumber: '',
+  ctc: '',
+  city: 'Delhi',
+  basicPercent: 40,
+  month: MONTHS[currentDate.getMonth()],
+  year: currentDate.getFullYear(),
+  paymentDate: '',
+  workingDays: 30,
+  paidDays: 30,
+  pfEnabled: true,
+  esiEnabled: true,
+  professionalTax: true,
+};
+
+const SAVED_KEYS = ['companyName','companyAddress','companyLogo','bankName','pfAccountNo','esiNumber','panNumber'];
+
 export default function SalaryForm({ onCalculate }) {
-  const [form, setForm] = useState({
-    companyName: '',
-    companyAddress: '',
-    companyLogo: null,
-    employeeName: '',
-    employeeId: '',
-    designation: '',
-    department: '',
-    dateOfJoining: '',
-    panNumber: '',
-    pfAccountNo: '',
-    esiNumber: '',
-    bankName: '',
-    accountNumber: '',
-    ctc: '',
-    city: 'Delhi',
-    basicPercent: 40,
-    month: MONTHS[currentDate.getMonth()],
-    year: currentDate.getFullYear(),
-    paymentDate: '',
-    workingDays: 30,
-    paidDays: 30,
-    pfEnabled: true,
-    esiEnabled: true,
-    professionalTax: true,
+  const [form, setForm] = useState(() => {
+    if (typeof window === 'undefined') return defaultForm;
+    const saved = {};
+    SAVED_KEYS.forEach(k => {
+      const v = localStorage.getItem('slip_' + k);
+      if (v !== null) saved[k] = k === 'companyLogo' ? v : v;
+    });
+    return { ...defaultForm, ...saved };
   });
 
   const [errors, setErrors] = useState({});
 
-  const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
+  const set = (key, val) => {
+    setForm(f => ({ ...f, [key]: val }));
+    if (SAVED_KEYS.includes(key) && val !== null) {
+      localStorage.setItem('slip_' + key, typeof val === 'string' ? val : '');
+    }
+  };
 
   const handleLogoUpload = (e) => {
     const file = e.target.files[0];
@@ -72,13 +89,13 @@ export default function SalaryForm({ onCalculate }) {
 
   const field = (label, key, type = 'text', placeholder = '') => (
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{label}</label>
       <input
         type={type}
         value={form[key]}
         onChange={e => set(key, e.target.value)}
         placeholder={placeholder}
-        className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors[key] ? 'border-red-400' : 'border-gray-300'}`}
+        className={`w-full px-3 py-2 border rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors[key] ? 'border-red-400' : 'border-gray-300 dark:border-gray-600'}`}
       />
       {errors[key] && <p className="text-red-500 text-xs mt-1">{errors[key]}</p>}
     </div>
@@ -92,10 +109,11 @@ export default function SalaryForm({ onCalculate }) {
           {field('Company Address', 'companyAddress', 'text', '123 MG Road, Bangalore')}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Company Logo (optional)</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Company Logo (optional)</label>
           <input type="file" accept="image/*" onChange={handleLogoUpload}
             className="text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:border file:border-gray-300 file:rounded-lg file:text-sm file:bg-gray-50 hover:file:bg-gray-100" />
         </div>
+        <p className="text-xs text-indigo-500 dark:text-indigo-400">Company info is saved in your browser for next time.</p>
       </Section>
 
       <Section title="Employee Details">
@@ -116,30 +134,30 @@ export default function SalaryForm({ onCalculate }) {
       <Section title="Salary Structure">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Annual CTC (₹) *</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Annual CTC (₹) *</label>
             <input type="number" value={form.ctc} onChange={e => set('ctc', e.target.value)}
               placeholder="600000"
-              className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.ctc ? 'border-red-400' : 'border-gray-300'}`} />
+              className={`w-full px-3 py-2 border rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.ctc ? 'border-red-400' : 'border-gray-300 dark:border-gray-600'}`} />
             {errors.ctc && <p className="text-red-500 text-xs mt-1">{errors.ctc}</p>}
-            {form.ctc && <p className="text-indigo-600 text-xs mt-1">Monthly: ₹{Math.round(form.ctc/12).toLocaleString('en-IN')}</p>}
+            {form.ctc && <p className="text-indigo-600 dark:text-indigo-400 text-xs mt-1">Monthly: ₹{Math.round(form.ctc/12).toLocaleString('en-IN')}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">City (for HRA %)</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">City (for HRA %)</label>
             <select value={form.city} onChange={e => set('city', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              <option value="Delhi">Delhi (Metro — 50% HRA)</option>
-              <option value="Mumbai">Mumbai (Metro — 50% HRA)</option>
-              <option value="Kolkata">Kolkata (Metro — 50% HRA)</option>
-              <option value="Chennai">Chennai (Metro — 50% HRA)</option>
-              <option value="Bangalore">Bangalore (Non-Metro — 40% HRA)</option>
-              <option value="Hyderabad">Hyderabad (Non-Metro — 40% HRA)</option>
-              <option value="Pune">Pune (Non-Metro — 40% HRA)</option>
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option value="Delhi">Delhi (Metro - 50% HRA)</option>
+              <option value="Mumbai">Mumbai (Metro - 50% HRA)</option>
+              <option value="Kolkata">Kolkata (Metro - 50% HRA)</option>
+              <option value="Chennai">Chennai (Metro - 50% HRA)</option>
+              <option value="Bangalore">Bangalore (Non-Metro - 40% HRA)</option>
+              <option value="Hyderabad">Hyderabad (Non-Metro - 40% HRA)</option>
+              <option value="Pune">Pune (Non-Metro - 40% HRA)</option>
               <option value="Other">Other City (40% HRA)</option>
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Basic Salary: <span className="text-indigo-600 font-semibold">{form.basicPercent}%</span> of Monthly CTC
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Basic Salary: <span className="text-indigo-600 dark:text-indigo-400 font-semibold">{form.basicPercent}%</span> of Monthly CTC
             </label>
             <input type="range" min="30" max="60" step="5" value={form.basicPercent}
               onChange={e => set('basicPercent', +e.target.value)}
@@ -160,30 +178,30 @@ export default function SalaryForm({ onCalculate }) {
       <Section title="Pay Period">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Month</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Month</label>
             <select value={form.month} onChange={e => set('month', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">
               {MONTHS.map(m => <option key={m}>{m}</option>)}
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Year</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Year</label>
             <select value={form.year} onChange={e => set('year', +e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">
               {[2024,2025,2026,2027].map(y => <option key={y}>{y}</option>)}
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Working Days</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Working Days</label>
             <input type="number" min="1" max="31" value={form.workingDays}
               onChange={e => set('workingDays', +e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Paid Days</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Paid Days</label>
             <input type="number" min="1" max="31" value={form.paidDays}
               onChange={e => set('paidDays', +e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.paidDays ? 'border-red-400' : 'border-gray-300'}`} />
+              className={`w-full px-3 py-2 border rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.paidDays ? 'border-red-400' : 'border-gray-300 dark:border-gray-600'}`} />
             {errors.paidDays && <p className="text-red-500 text-xs mt-1">{errors.paidDays}</p>}
           </div>
         </div>
@@ -200,8 +218,8 @@ export default function SalaryForm({ onCalculate }) {
 
 function Section({ title, children }) {
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl p-5 space-y-4 shadow-sm">
-      <h3 className="text-sm font-semibold text-indigo-700 uppercase tracking-wide">{title}</h3>
+    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 space-y-4 shadow-sm">
+      <h3 className="text-sm font-semibold text-indigo-700 dark:text-indigo-400 uppercase tracking-wide">{title}</h3>
       {children}
     </div>
   );
@@ -211,10 +229,10 @@ function Toggle({ label, value, onChange }) {
   return (
     <label className="flex items-center gap-2 cursor-pointer select-none">
       <div onClick={() => onChange(!value)}
-        className={`w-10 h-5 rounded-full transition-colors flex items-center px-0.5 ${value ? 'bg-indigo-600' : 'bg-gray-300'}`}>
+        className={`w-10 h-5 rounded-full transition-colors flex items-center px-0.5 ${value ? 'bg-indigo-600' : 'bg-gray-300 dark:bg-gray-600'}`}>
         <div className={`w-4 h-4 rounded-full bg-white shadow transition-transform ${value ? 'translate-x-5' : 'translate-x-0'}`} />
       </div>
-      <span className="text-sm text-gray-700">{label}</span>
+      <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>
     </label>
   );
 }

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @media print {
   header, footer, nav, button, .print\:hidden { display: none !important; }
   body { background: white !important; }

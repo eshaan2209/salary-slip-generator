@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import SalaryOfferComparison from '../components/SalaryOfferComparison.jsx';
+---
+
+<Base
+  title="Salary Offer Comparison Tool - Compare Two Job Offers India | PaySlipGen"
+  description="Compare two salary offers side by side. See the difference in CTC, take-home pay, PF, and deductions. Make informed career decisions."
+  schema={{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Salary Offer Comparison Tool - Compare Two Job Offers",
+    "description": "Compare two salary offers side by side. See CTC vs take-home pay differences.",
+    "author": { "@type": "Organization", "name": "PaySlipGen.in" },
+    "publisher": { "@type": "Organization", "name": "PaySlipGen.in" },
+    "datePublished": "2026-05-30",
+    "dateModified": "2026-05-30",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://payslipgen.in/salary-offer-comparison" }
+  }}
+>
+  <article class="max-w-3xl mx-auto px-4 py-12">
+    <nav class="text-sm text-gray-400 mb-6" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-indigo-600">Home</a>
+      <span class="mx-2">/</span>
+      <span class="text-gray-600">Salary Comparison</span>
+    </nav>
+
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Compare Salary Offers</h1>
+    <p class="text-gray-500 text-lg mb-8">Two job offers? See which one actually pays more in-hand.</p>
+
+    <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-sm mb-8">
+      <SalaryOfferComparison client:load />
+    </div>
+
+    <div class="prose prose-gray dark:prose-invert max-w-none space-y-6">
+      <section>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">Why CTC Can Be Misleading</h2>
+        <p class="text-gray-600 dark:text-gray-300">
+          Two offers with the same CTC can have very different take-home pay. Company A might have a higher basic (more PF, less in-hand) while Company B has a lower basic (less PF, more in-hand). The city also affects HRA and therefore tax savings. This tool shows you the real difference.
+        </p>
+      </section>
+    </div>
+  </article>
+</Base>

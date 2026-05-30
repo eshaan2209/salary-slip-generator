@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ThemeToggle from '../components/ThemeToggle.jsx';
 interface Props {
   title: string;
   description: string;
@@ -16,14 +17,10 @@ const url = canonical || Astro.url.href;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Primary Meta -->
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href={url} />
-
-  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content={url} />
   <meta property="og:title" content={title} />
@@ -31,22 +28,19 @@ const url = canonical || Astro.url.href;
   <meta property="og:image" content={`https://payslipgen.in${ogImage}`} />
   <meta property="og:site_name" content="PaySlipGen.in" />
   <meta property="og:locale" content="en_IN" />
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={`https://payslipgen.in${ogImage}`} />
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-
-  <!-- Preconnect for performance -->
-  <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-
-  <!-- Default Schema.org -->
+  <script is:inline>
+    (function() {
+      const t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
   <script type="application/ld+json" set:html={JSON.stringify(schema || {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -59,16 +53,22 @@ const url = canonical || Astro.url.href;
     "author": { "@type": "Organization", "name": "PaySlipGen.in" }
   })} />
 </head>
-<body class="bg-gray-50 text-gray-900 antialiased">
-  <header class="bg-white border-b border-gray-200 px-4 py-3">
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased transition-colors">
+  <header class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-4 py-3">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <a href="/" class="font-bold text-indigo-700 text-lg">PaySlipGen.in</a>
-      <nav class="flex gap-4 text-sm text-gray-600" aria-label="Main navigation">
-        <a href="/generator" class="hover:text-indigo-600">Generator</a>
-        <a href="/pf-calculator" class="hover:text-indigo-600">PF Calculator</a>
-        <a href="/hra-exemption-calculator" class="hover:text-indigo-600">HRA Calculator</a>
-        <a href="/gratuity-calculator" class="hover:text-indigo-600">Gratuity</a>
+      <a href="/" class="font-bold text-indigo-600 dark:text-indigo-400 text-lg">PaySlipGen.in</a>
+      <nav class="hidden md:flex gap-4 text-sm text-gray-600 dark:text-gray-400" aria-label="Main navigation">
+        <a href="/generator" class="hover:text-indigo-600 dark:hover:text-indigo-400">Generator</a>
+        <a href="/pf-calculator" class="hover:text-indigo-600 dark:hover:text-indigo-400">PF</a>
+        <a href="/hra-exemption-calculator" class="hover:text-indigo-600 dark:hover:text-indigo-400">HRA</a>
+        <a href="/gratuity-calculator" class="hover:text-indigo-600 dark:hover:text-indigo-400">Gratuity</a>
+        <a href="/tax-regime-comparator" class="hover:text-indigo-600 dark:hover:text-indigo-400">Tax</a>
+        <a href="/salary-offer-comparison" class="hover:text-indigo-600 dark:hover:text-indigo-400">Compare</a>
+        <a href="/bulk-generator" class="hover:text-indigo-600 dark:hover:text-indigo-400">Bulk</a>
       </nav>
+      <div class="flex items-center gap-2">
+        <ThemeToggle client:load />
+      </div>
     </div>
   </header>
 
@@ -76,15 +76,17 @@ const url = canonical || Astro.url.href;
     <slot />
   </main>
 
-  <footer class="border-t border-gray-200 mt-16 py-8 text-center text-gray-400 text-sm">
+  <footer class="border-t border-gray-200 dark:border-gray-800 mt-16 py-8 text-center text-gray-400 text-sm">
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex flex-wrap justify-center gap-4 mb-4">
-        <a href="/generator" class="hover:text-indigo-600">Salary Slip Generator</a>
-        <a href="/pf-calculator" class="hover:text-indigo-600">PF Calculator</a>
-        <a href="/hra-exemption-calculator" class="hover:text-indigo-600">HRA Exemption Calculator</a>
-        <a href="/gratuity-calculator" class="hover:text-indigo-600">Gratuity Calculator</a>
-        <a href="/salary-components" class="hover:text-indigo-600">Salary Components Guide</a>
-        <a href="/how-to-read-salary-slip" class="hover:text-indigo-600">How to Read Salary Slip</a>
+        <a href="/generator" class="hover:text-indigo-600 dark:hover:text-indigo-400">Salary Slip Generator</a>
+        <a href="/pf-calculator" class="hover:text-indigo-600 dark:hover:text-indigo-400">PF Calculator</a>
+        <a href="/hra-exemption-calculator" class="hover:text-indigo-600 dark:hover:text-indigo-400">HRA Calculator</a>
+        <a href="/gratuity-calculator" class="hover:text-indigo-600 dark:hover:text-indigo-400">Gratuity Calculator</a>
+        <a href="/tax-regime-comparator" class="hover:text-indigo-600 dark:hover:text-indigo-400">Tax Regime</a>
+        <a href="/salary-offer-comparison" class="hover:text-indigo-600 dark:hover:text-indigo-400">Compare Offers</a>
+        <a href="/bulk-generator" class="hover:text-indigo-600 dark:hover:text-indigo-400">Bulk Generator</a>
+        <a href="/salary-components" class="hover:text-indigo-600 dark:hover:text-indigo-400">Salary Guide</a>
       </div>
       <p>Free Salary Slip Generator &middot; Made for Indian businesses &middot; No sign-up required</p>
     </div>

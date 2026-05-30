@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import BulkCSVGenerator from '../components/BulkCSVGenerator.jsx';
+---
+
+<Base
+  title="Bulk Salary Slip Generator - CSV Upload for Multiple Employees | PaySlipGen"
+  description="Generate salary slips for multiple employees at once. Upload a CSV file with employee names, CTC, and designations. Bulk payroll calculation for Indian companies."
+  schema={{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Bulk Salary Slip Generator - CSV Upload",
+    "description": "Generate salary slips for multiple employees at once using CSV upload.",
+    "author": { "@type": "Organization", "name": "PaySlipGen.in" },
+    "publisher": { "@type": "Organization", "name": "PaySlipGen.in" },
+    "datePublished": "2026-05-30",
+    "dateModified": "2026-05-30",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://payslipgen.in/bulk-generator" }
+  }}
+>
+  <article class="max-w-3xl mx-auto px-4 py-12">
+    <nav class="text-sm text-gray-400 mb-6" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-indigo-600">Home</a>
+      <span class="mx-2">/</span>
+      <span class="text-gray-600">Bulk Generator</span>
+    </nav>
+
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Bulk Salary Calculator</h1>
+    <p class="text-gray-500 text-lg mb-8">Calculate salary for multiple employees at once using CSV data</p>
+
+    <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-sm mb-8">
+      <BulkCSVGenerator client:load />
+    </div>
+
+    <div class="prose prose-gray dark:prose-invert max-w-none space-y-6">
+      <section>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">CSV Format</h2>
+        <p class="text-gray-600 dark:text-gray-300">Required columns: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">employeeName</code> and <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">ctc</code>. Optional: employeeId, designation, department, city, basicPercent.</p>
+      </section>
+      <section>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">Output</h2>
+        <p class="text-gray-600 dark:text-gray-300">View all calculations in a table and download as CSV for import into your payroll system or Excel.</p>
+      </section>
+    </div>
+  </article>
+</Base>
